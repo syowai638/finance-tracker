@@ -1,0 +1,9 @@
+# Ignore Python virtual environment
+.env/
+venv/
+Pipfile.lock
+__pycache__/
+*.pyc
+
+# Ignore database file
+finance_tracker.db
