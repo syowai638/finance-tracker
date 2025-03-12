@@ -24,9 +24,10 @@ class Transaction(Base):
     __tablename__ = 'transactions'  # Table name in the database
 
     id = Column(Integer, primary_key=True)  # Unique identifier
-    user_id = Column(Integer, ForeignKey('users.id'))  # Links to a user
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)  # Links to a user
     amount = Column(Float, nullable=False)  # Can be positive (income) or negative (expense)
     category = Column(String, nullable=False)  # e.g., Food, Transport, Rent
+    description = Column(String, nullable=False)  # ✅ Added description
     date = Column(Date, default=date.today)  # Defaults to today's date
 
     # Relationship: Links transactions to a user
@@ -42,6 +43,10 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # ✅ Create the tables in the database
-Base.metadata.create_all(engine)
+def setup_database():
+    """Creates the database tables if they don't exist"""
+    Base.metadata.create_all(engine)
+    print("Database setup complete! 🎉")
 
-print("Database setup complete! 🎉")
+if __name__ == "__main__":
+    setup_database()
